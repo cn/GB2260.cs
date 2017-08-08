@@ -23,7 +23,7 @@ namespace GB2260
             provinces = new List<Division>();
             try
             {
-                var path = "/data/" + (Int32)revision + ".txt";
+                var path = "/data/stats/" + (Int32)revision + ".tsv";
                 FileStream fileStream = new FileStream(path, FileMode.Open);
                 using (StreamReader sr = new StreamReader(fileStream))
                 {
