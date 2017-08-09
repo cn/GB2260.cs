@@ -4,6 +4,8 @@ pull_requests:
 image: Visual Studio 2017
 nuget:
   disable_publish_on_pr: true
+install:
+- cmd: git submodule update --init --recursive
 build_script:
 - ps: .\Build.ps1
 test: off

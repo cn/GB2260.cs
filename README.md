@@ -38,8 +38,8 @@ division.Name
 // 朝阳区
 division.Code
 // 110105
-division.Revision
-// 2014
+(int)division.Revision
+// 201607
 
 division.GetProvince()
 // 北京市
@@ -50,7 +50,7 @@ division.ToString()
 // 北京市 市辖区 朝阳区
 ```
 
-### .getProvinces()
+### .GetProvinces()
 
 Return a list of provinces in Division data structure.
 
