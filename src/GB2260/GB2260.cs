@@ -1,78 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace GB2260
 {
-    public class GB2260
+    public class Gb2260
     {
-        private readonly Revision revision;
-        private Dictionary<String, String> data;
-        private List<Division> provinces;
+        public Revision Revision {get;set;}
+        private readonly Dictionary<string, string> _data;
+        public List<Division> Provinces {get;set;}
 
-        public GB2260() : this(Revision.V2014)
+        public Gb2260() : this(Revision.V201607)
         {
 
         }
 
-        public GB2260(Revision revision)
+        public Gb2260(Revision revision)
         {
-            this.revision = revision;
-            data = new Dictionary<String, String>();
-            provinces = new List<Division>();
+            Revision = revision;
+            _data = new Dictionary<string, string>();
+            Provinces = new List<Division>();
             try
             {
-                var path = "/data/stats/" + (Int32)revision + ".tsv";
-                FileStream fileStream = new FileStream(path, FileMode.Open);
-                using (StreamReader sr = new StreamReader(fileStream))
+                var fileName = $"GB2260.{(int)revision}.tsv";
+                var assembly = typeof(Gb2260).GetTypeInfo().Assembly;
+                using(var stream = assembly.GetManifestResourceStream(fileName))
+                using (var textReader = new StreamReader(stream))
                 {
-
-                    while (sr.Peek() >= 0)
+                    string line;
+                    while( (line = textReader.ReadLine()) != null )
                     {
-                        var line = sr.ReadLine();
                         var split = line.Split('\t');
-                        var code = split[0];
-                        var name = split[1];
-                        data.Add(code, name);
+                        var code = split[2];
+                        var name = split[3];
+                        _data.Add(code, name);
                         if (Regex.IsMatch(code, "^\\d{2}0{4}$"))
                         {
+                            var source = split[0];
+                            var intRevision = int.Parse(split[1]);
                             Division division = new Division
                             {
+                                Source = source,
+                                Revision = (Revision)intRevision,
                                 Code = code,
                                 Name = name
                             };
-                            provinces.Add(division);
+                            Provinces.Add(division);
 
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Error in loading GB2260 data!");
-                throw ex;
+                throw;
             }
 
 
         }
 
-        public Division getDivision(String code)
+        public Division GetDivision(string code)
         {
             if (code.Length != 6)
             {
                 throw new InvalidDataException("Invalid code");
             }
 
-            if (!data.ContainsKey(code))
+            if (!_data.ContainsKey(code))
             {
                 return null;
             }
 
             Division division = new Division
             {
-                Name = data[code],
-                Revision = revision,
+                Name = _data[code],
+                Revision = Revision,
                 Code = code
             };
 
@@ -81,30 +86,19 @@ namespace GB2260
                 return division;
             }
 
-            String provinceCode = code.Substring(0, 2) + "0000";
-            division.Province = data[provinceCode];
+            string provinceCode = code.Substring(0, 2) + "0000";
+            division.Province = _data[provinceCode];
 
             if (Regex.IsMatch(code, "^\\d{4}0{2}$"))
             {
                 return division;
             }
 
-            String prefectureCode = code.Substring(0, 4) + "00";
-            division.Prefecture = data[prefectureCode];
+            string prefectureCode = code.Substring(0, 4) + "00";
+            division.Prefecture = _data[prefectureCode];
             return division;
         }
-
-        public Revision getRevision()
-        {
-            return revision;
-        }
-
-        public List<Division> getProvinces()
-        {
-            return provinces;
-        }
-
-        public List<Division> getPrefectures(String code)
+        public List<Division> GetPrefectures(string code)
         {
             List<Division> rv = new List<Division>();
 
@@ -113,19 +107,19 @@ namespace GB2260
                 throw new InvalidDataException("Invalid province code");
             }
 
-            if (!data.ContainsKey(code))
+            if (!_data.ContainsKey(code))
             {
                 throw new InvalidDataException("Province code not found");
             }
 
-            Division province = getDivision(code);
+            Division province = GetDivision(code);
 
             string pattern = "^" + code.Substring(0, 2) + "\\d{2}00$";
-            foreach (var key in data.Keys)
+            foreach (var key in _data.Keys)
             {
                 if (Regex.IsMatch(key, pattern))
                 {
-                    Division division = getDivision(key);
+                    Division division = GetDivision(key);
                     division.Province = province.Name;
                     rv.Add(division);
                 }
@@ -135,7 +129,7 @@ namespace GB2260
             return rv;
         }
 
-        public List<Division> getCounties(String code)
+        public List<Division> GetCounties(String code)
         {
             List<Division> rv = new List<Division>();
 
@@ -144,20 +138,20 @@ namespace GB2260
                 throw new InvalidDataException("Invalid prefecture code");
             }
 
-            if (!data.ContainsKey(code))
+            if (!_data.ContainsKey(code))
             {
                 throw new InvalidDataException("Prefecture code not found");
             }
 
-            Division prefecture = getDivision(code);
-            Division province = getDivision(code.Substring(0, 2) + "0000");
+            Division prefecture = GetDivision(code);
+            Division province = GetDivision(code.Substring(0, 2) + "0000");
 
             string pattern = "^" + code.Substring(0, 4) + "\\d+$";
-            foreach (var key in data.Keys)
+            foreach (var key in _data.Keys)
             {
                 if (Regex.IsMatch(key, pattern))
                 {
-                    Division division = getDivision(key);
+                    Division division = GetDivision(key);
                     division.Province = province.Name;
                     division.Prefecture = prefecture.Name;
                     rv.Add(division);

@@ -1,9 +1,8 @@
-using System;
-
 namespace GB2260
 {
     public class Division
     {
+        public string Source {get;set;}
         public string Name { get; set; }
         public string Code { get; set; }
         public Revision Revision { get; set; }
