@@ -13,7 +13,7 @@ The latest GB/T 2260 codes. Read the [GB2260 Specification](https://github.com/c
 
 Install with nuget:
 
-    Install-Package gb2260
+    Install-Package GB2260.Core
 
 ## Usage
 
