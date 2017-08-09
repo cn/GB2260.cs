@@ -5,7 +5,7 @@ The .NET Core implementation for looking up Chinese administrative divisions.
 
 [![GB/T 2260](https://img.shields.io/badge/GB%2FT%202260-v0.2-blue.svg)](https://github.com/cn/GB2260)
 [![Build status](https://ci.appveyor.com/api/projects/status/6o5vfi0xcn2i1hbx?svg=true)](https://ci.appveyor.com/project/codeyu/gb2260-csharp)
-[![NuGet Badge](https://buildstats.info/nuget/gb2260)](https://www.nuget.org/packages/gb2260/)
+[![NuGet Badge](https://buildstats.info/nuget/GB2260)](https://www.nuget.org/packages/GB2260/)
 
 The latest GB/T 2260 codes. Read the [GB2260 Specification](https://github.com/cn/GB2260/blob/v0.2/spec.md).
 
