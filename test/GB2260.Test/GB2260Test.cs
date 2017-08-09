@@ -34,7 +34,7 @@ namespace GB2260.Test
         [Fact]
         public void TestGetCounties()
         {
-            var code = "320322";
+            var code = "310100";
             var result = Gb.GetCounties(code);
             Assert.True(result.Count > 0);
         }
