@@ -36,7 +36,7 @@ exec { & dotnet build GB2260.csharp.sln -c Release --version-suffix=$buildSuffix
 
 Push-Location -Path .\test\GB2260.Test
 
-exec { & dotnet test -configuration Release }
+exec { & dotnet test -c Release }
 
 Pop-Location
 
