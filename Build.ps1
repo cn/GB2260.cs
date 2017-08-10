@@ -32,7 +32,7 @@ $suffix = @{ $true = ""; $false = "ci-$revision"}[$tag -ne $NULL -and $revision 
 $commitHash = $(git rev-parse --short HEAD)
 $buildSuffix = @{ $true = "$($suffix)-$($commitHash)"; $false = "$($branch)-$($commitHash)" }[$suffix -ne ""]
 
-exec { & dotnet build GB2260.csharp.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
+exec { & dotnet build GB2260.sln -c Release --version-suffix=$buildSuffix -v q /nologo }
 
 Push-Location -Path .\test\GB2260.Test
 
