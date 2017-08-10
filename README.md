@@ -1,4 +1,4 @@
-# GB2260.csharp
+# GB2260.cs
 The .NET Core implementation for looking up Chinese administrative divisions.
 
 ## GB/T 2260
@@ -20,8 +20,8 @@ Install with nuget:
 ## GB2260
 
 ```cs
-GB2260 gb = new GB2260(); // with default revision 201607
-GB2260 gb = new GB2260(Revision.V201607); // specify the revision
+GB2260 gb = Gb2260.GetInstance(); // with default revision 201607
+GB2260 gb = Gb2260.GetInstance(Revision.V201607); // specify the revision
 ```
 
 Interface for GB2260.

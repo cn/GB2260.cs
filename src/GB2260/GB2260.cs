@@ -8,16 +8,13 @@ namespace GB2260
 {
     public class Gb2260
     {
+        private static Gb2260 _instance;
+        private static readonly object Locker = new object();
         public Revision Revision {get;set;}
         private readonly Dictionary<string, string> _data;
         public List<Division> Provinces {get;set;}
 
-        public Gb2260() : this(Revision.V201607)
-        {
-
-        }
-
-        public Gb2260(Revision revision)
+        private Gb2260(Revision revision)
         {
             Revision = revision;
             _data = new Dictionary<string, string>();
@@ -61,6 +58,22 @@ namespace GB2260
 
 
         }
+        public static Gb2260 GetInstance(Revision revision = Revision.V201607)
+        {
+            
+            if (_instance == null)
+            {
+                lock (Locker)
+                {
+                    
+                    if (_instance == null)
+                    {
+                        _instance = new Gb2260(revision);
+                    }
+                }
+            }
+            return _instance;
+        }   
 
         public Division GetDivision(string code)
         {

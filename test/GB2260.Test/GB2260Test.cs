@@ -8,12 +8,12 @@ namespace GB2260.Test
         public readonly Gb2260 Gb;
         public Gb2260Test()
         {
-            Gb = new Gb2260();
+            Gb = Gb2260.GetInstance();
         }
         [Fact]
         public void TestConstructor()
         {
-            var gb = new Gb2260();
+            var gb = Gb2260.GetInstance();
             Assert.Equal(Revision.V201607, gb.Revision);
             Assert.NotNull(gb.Provinces);
         }
