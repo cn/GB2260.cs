@@ -12,7 +12,7 @@ install:
 build_script:
 - ps: .\Build.ps1
 test_script:
-- dotnet test test/GB2260.Test/GB2260.Test.csproj --configuration Release -f netcoreapp1.0 --no-build
+- dotnet test test/GB2260.Test/GB2260.Test.csproj --configuration Release -f netcoreapp1.1 --no-build
 - bash coverage.sh
 - bash coveralls.sh
 artifacts:
