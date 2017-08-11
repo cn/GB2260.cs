@@ -4,11 +4,17 @@ pull_requests:
 image: Visual Studio 2017
 nuget:
   disable_publish_on_pr: true
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: k+323/6hqQuYB4EzqreswA51buEG/ZrZJQ0BrQJtf19PFr2V1ri0lp1brWT7spb2
 install:
 - cmd: git submodule update --init --recursive
 build_script:
 - ps: .\Build.ps1
-test: off
+test_script:
+- dotnet test test/GB2260.Test/GB2260.Test.csproj --configuration Release -f netcoreapp1.0 --no-build
+- bash coverage.sh
+- bash coveralls.sh
 artifacts:
 - path: .\src\GB2260\artifacts\**\*.nupkg
   name: NuGet

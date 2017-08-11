@@ -20,5 +20,6 @@ script:
   - dotnet restore "src\GB2260" 
   - dotnet build "src\GB2260"
   - dotnet restore "test\GB2260.Test"
-  - dotnet build "test\GB2260.Test"
-  - dotnet test "test\GB2260.Test"
+  - dotnet build "test\GB2260.Test" -c Release
+  - dotnet test "test\GB2260.Test\GB2260.Test.csproj" --configuration Release --no-build
+  
