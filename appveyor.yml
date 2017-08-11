@@ -15,7 +15,6 @@ test_script:
 - dotnet test test/GB2260.Test/GB2260.Test.csproj --configuration Release -f netcoreapp1.1 --no-build
 after_test: 
 - bash coverage.sh
-- bash coveralls.sh
 artifacts:
 - path: .\src\GB2260\artifacts\**\*.nupkg
   name: NuGet
