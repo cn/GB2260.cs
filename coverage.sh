@@ -41,9 +41,9 @@ $OPENCOVER \
   -hideskipped:File \
   -output:$coverage/coverage.xml \
   -oldStyle \
-  -filter:"+[GB2260*]* -[GB2260.*Tests*]*" \
+  -filter:"+[*]*" \
   -searchdirs:$testdir/bin/$CONFIG/netcoreapp1.1 \
-  -register:user
+  -register:administrator
 
 echo "Generating HTML report"
 $REPORTGENERATOR \
