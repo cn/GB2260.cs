@@ -3,7 +3,7 @@
 set -e
 
 # Install OpenCover and ReportGenerator, and save the path to their executables.
-nuget install -Verbosity quiet -OutputDirectory packages -Version 4.6.519 OpenCover
+nuget install -Verbosity quiet -OutputDirectory packages -Version 4.6.589 OpenCover
 nuget install -Verbosity quiet -OutputDirectory packages -Version 2.4.5.0 ReportGenerator
 
 OPENCOVER=$PWD/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe
@@ -43,7 +43,7 @@ $OPENCOVER \
   -oldStyle \
   -filter:"+[*]*" \
   -searchdirs:$testdir/bin/$CONFIG/netcoreapp1.1 \
-  -register:administrator
+  -register:Path64
 
 echo "Generating HTML report"
 $REPORTGENERATOR \
