@@ -4,12 +4,12 @@ matrix:
   include:
     - os: osx
       osx_image: xcode8.3
-      dotnet: 1.1.1
+      dotnet: 1.0.1
       mono: none
     - os: linux
       dist: trusty
       sudo: required
-      dotnet: 1.1.1
+      dotnet: 1.0.1
       mono: none
 
 branches:
