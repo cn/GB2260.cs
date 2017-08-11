@@ -43,7 +43,7 @@ $OPENCOVER \
   -oldStyle \
   -filter:"+[*]*" \
   -searchdirs:$testdir/bin/$CONFIG/netcoreapp1.1 \
-  -register:Path64
+  -register:Path32
 
 echo "Generating HTML report"
 $REPORTGENERATOR \
