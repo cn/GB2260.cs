@@ -23,7 +23,7 @@ Install with nuget:
 ## GB2260
 
 ```cs
-GB2260 gb = Gb2260Factory.Create();; // with default revision 201607
+GB2260 gb = Gb2260Factory.Create(); // with default revision 201607
 GB2260 gb = Gb2260Factory.Create(Revision.V201607); // specify the revision
 ```
 
