@@ -5,7 +5,6 @@ then
   nuget install -OutputDirectory packages -Version 1.3.4 coveralls.io
   COVERALLSNET=$PWD/packages/coveralls.io.1.3.4/tools/coveralls.net.exe
   $COVERALLSNET \
-    --opencover \
-    -i coverage/coverage.xml \
-    --useRelativePaths
+    --opencover coverage/coverage.xml \
+    -r $COVERALLS_REPO_TOKEN
 fi
