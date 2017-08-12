@@ -11,7 +11,7 @@ namespace GB2260
         public Revision Revision {get;set;}
         private readonly Dictionary<string, string> _data;
         public List<Division> Provinces {get;set;}
-
+        
         public Gb2260(Revision revision = Revision.V201607)
         {
             Revision = revision;
@@ -35,7 +35,7 @@ namespace GB2260
                         {
                             var source = split[0];
                             var intRevision = int.Parse(split[1]);
-                            Division division = new Division
+                            var division = new Division
                             {
                                 Source = source,
                                 Revision = (Revision)intRevision,
@@ -69,7 +69,7 @@ namespace GB2260
                 return null;
             }
 
-            Division division = new Division
+            var division = new Division
             {
                 Name = _data[code],
                 Revision = Revision,
@@ -81,7 +81,7 @@ namespace GB2260
                 return division;
             }
 
-            string provinceCode = code.Substring(0, 2) + "0000";
+            var provinceCode = $"{code.Substring(0, 2)}0000";
             division.Province = _data[provinceCode];
 
             if (Regex.IsMatch(code, "^\\d{4}0{2}$"))
@@ -89,13 +89,13 @@ namespace GB2260
                 return division;
             }
 
-            string prefectureCode = code.Substring(0, 4) + "00";
+            var prefectureCode = $"{code.Substring(0, 4)}00";
             division.Prefecture = _data[prefectureCode];
             return division;
         }
         public List<Division> GetPrefectures(string code)
         {
-            List<Division> rv = new List<Division>();
+            var lstDiv = new List<Division>();
 
             if (!Regex.IsMatch(code, "^\\d{2}0{4}$"))
             {
@@ -107,26 +107,26 @@ namespace GB2260
                 throw new InvalidDataException("Province code not found");
             }
 
-            Division province = GetDivision(code);
+            var province = GetDivision(code);
 
-            string pattern = "^" + code.Substring(0, 2) + "\\d{2}00$";
+            var pattern = "^" + code.Substring(0, 2) + "\\d{2}00$";
             foreach (var key in _data.Keys)
             {
                 if (Regex.IsMatch(key, pattern))
                 {
-                    Division division = GetDivision(key);
+                    var division = GetDivision(key);
                     division.Province = province.Name;
-                    rv.Add(division);
+                    lstDiv.Add(division);
                 }
 
             }
 
-            return rv;
+            return lstDiv;
         }
 
-        public List<Division> GetCounties(String code)
+        public List<Division> GetCounties(string code)
         {
-            List<Division> rv = new List<Division>();
+            var lstDiv = new List<Division>();
 
             if (!Regex.IsMatch(code, "^\\d+[1-9]0{2,3}$"))
             {
@@ -138,22 +138,22 @@ namespace GB2260
                 throw new InvalidDataException("Prefecture code not found");
             }
 
-            Division prefecture = GetDivision(code);
-            Division province = GetDivision(code.Substring(0, 2) + "0000");
+            var prefecture = GetDivision(code);
+            var province = GetDivision($"{code.Substring(0, 2)}0000");
 
-            string pattern = "^" + code.Substring(0, 4) + "\\d+$";
+            var pattern = "^" + code.Substring(0, 4) + "\\d+$";
             foreach (var key in _data.Keys)
             {
                 if (Regex.IsMatch(key, pattern))
                 {
-                    Division division = GetDivision(key);
+                    var division = GetDivision(key);
                     division.Province = province.Name;
                     division.Prefecture = prefecture.Name;
-                    rv.Add(division);
+                    lstDiv.Add(division);
                 }
             }
 
-            return rv;
+            return lstDiv;
         }
     }
 }

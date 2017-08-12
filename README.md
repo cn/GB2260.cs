@@ -77,7 +77,7 @@ Return a list of counties in Division data structure.
 gb.GetCounties("110100")
 ```
 
-## revisions
+## class Revision 
 
 `Revision` contains a list of available revisions.
 

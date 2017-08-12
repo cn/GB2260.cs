@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace GB2260.Test
@@ -33,6 +32,14 @@ namespace GB2260.Test
             var code = "110105";
             var result = Gb.GetDivision(code);
             Assert.Equal(code, result.Code);
+        }
+        [Fact]
+        public void TestToString()
+        {
+            var code = "110105";
+            var str = "北京市 市辖区 朝阳区";
+            var result = Gb.GetDivision(code);
+            Assert.Equal(str, result.ToString());
         }
         [Fact]
         public void TestGetPrefectures()

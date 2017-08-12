@@ -11,7 +11,7 @@ namespace GB2260
 
         public override string ToString()
         {
-            return (Province == null ? "" : Province + " ") + (Prefecture == null ? "" : Prefecture + " ") + (Name == null ? "" : Name);
+            return $"{Province ?? ""} {Prefecture ?? ""} {Name ?? ""}";
         }
     }
 }
